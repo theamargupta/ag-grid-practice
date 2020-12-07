@@ -1,65 +1,70 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useState, useEffect } from 'react';
+import Layout from '../components/Layout';
+import { AgGridReact } from 'ag-grid-react';
+import axios from 'axios';
+// component
+import dropDown from '../components/Dropdown';
+import datePicker from '../components/DatePicker';
+import deleteBtn from '../components/Button';
+// helper and data
+import {
+  rowData,
+  columnDefs,
+  countryDefs,
+  dateOfBirthDefs,
+  defaultColDef,
+  deleteBtnDefs,
+  genderDefs,
+} from '../utility/data';
+import {
+  onAddRow,
+  onAddRowAtIndex3,
+  onRemoveSelected,
+} from '../utility/helper';
 
-export default function Home() {
+const Home = () => {
+  // Grid api
+  const [gridApi, setGridApi] = useState(null);
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+  };
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout title='Ag Grid'>
+      <div>
+        <button onClick={() => onAddRow(gridApi)}>Add Row</button>
+        <button onClick={() => onAddRowAtIndex3(gridApi)}>
+          Add Row at Index 3
+        </button>
+        <button onClick={() => onRemoveSelected(gridApi)}>
+          Remove selected
+        </button>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className='ag-theme-alpine' style={{ height: 400, width: 1600 }}>
+          <AgGridReact
+            onGridReady={onGridReady}
+            rowData={rowData}
+            columnDefs={[
+              ...columnDefs,
+              dateOfBirthDefs,
+              countryDefs,
+              genderDefs,
+              deleteBtnDefs,
+            ]}
+            defaultColDef={defaultColDef}
+            frameworkComponents={{
+              dropDown: dropDown,
+              datePicker: datePicker,
+              deleteBtn: deleteBtn,
+            }}
+            rowMultiSelectWithClick={true}
+            rowSelection='multiple'
+          />
         </div>
-      </main>
+      </div>
+    </Layout>
+  );
+};
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
-}
+export default Home;
