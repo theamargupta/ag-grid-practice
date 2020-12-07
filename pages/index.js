@@ -6,7 +6,7 @@ import axios from 'axios';
 import dropDown from '../components/Dropdown';
 import datePicker from '../components/DatePicker';
 import deleteBtn from '../components/Button';
-// helper and data
+// data
 import {
   rowData,
   columnDefs,
@@ -16,6 +16,7 @@ import {
   deleteBtnDefs,
   genderDefs,
 } from '../utility/data';
+// helper
 import {
   onAddRow,
   onAddRowAtIndex3,

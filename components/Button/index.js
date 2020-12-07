@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-function Button(props) {
+function Button({ api, data, name }) {
   const deleteRow = () => {
-    let data = props.data;
-    props.api.applyTransaction({ remove: [data] });
+    api.applyTransaction({ remove: [data] });
   };
-  return <button onClick={deleteRow}>{props.name}</button>;
+  return <button onClick={deleteRow}>{name}</button>;
 }
 
 export default Button;
