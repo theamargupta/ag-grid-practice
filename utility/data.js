@@ -1,3 +1,4 @@
+import validator from 'validator';
 export const rowData = [
   {
     name: 'Amar',
@@ -32,11 +33,51 @@ export const rowData = [
     dateOfBirth: '2020-12-11',
   },
 ];
-
+export const nameColumnDefs = {
+  headerName: 'Email',
+  field: 'email',
+  checkboxSelection: true,
+  cellStyle: function (params) {
+    if (!validator.isEmail(params.value)) {
+      return { color: 'white', backgroundColor: 'red' };
+    } else {
+      return null;
+    }
+  },
+};
 export const columnDefs = [
-  { headerName: 'Name', field: 'name', checkboxSelection: true },
-  { headerName: 'Email', field: 'email' },
+  { headerName: 'Name', field: 'name' },
   { headerName: 'City', field: 'city' },
+  {
+    headerName: 'Country',
+    field: 'country',
+    cellEditor: 'dropDown',
+    cellEditorParams: {
+      option: ['india', 'usa', 'uk'],
+    },
+  },
+  {
+    headerName: 'Date of Birth',
+    field: 'dateOfBirth',
+    cellEditor: 'datePicker',
+  },
+  {
+    headerName: 'Gender',
+    field: 'gender',
+    cellEditor: 'dropDown',
+    cellEditorParams: {
+      option: ['male', 'female'],
+    },
+  },
+  {
+    headerName: '',
+    field: 'deleteBtn',
+    cellRenderer: 'deleteBtn',
+    cellRendererParams: {
+      title: 'Delete',
+    },
+    editable: false,
+  },
 ];
 
 export const defaultColDef = {
@@ -45,36 +86,13 @@ export const defaultColDef = {
   filter: true,
 };
 
-export const countryDefs = {
-  headerName: 'Country',
-  field: 'country',
-  cellEditor: 'dropDown',
-  cellEditorParams: {
-    option: ['india', 'usa', 'uk'],
+export const emptyRowData = [
+  {
+    name: '',
+    email: '',
+    city: '',
+    country: '',
+    gender: '',
+    dateOfBirth: '',
   },
-};
-
-export const dateOfBirthDefs = {
-  headerName: 'Date of Birth',
-  field: 'dateOfBirth',
-  cellEditor: 'datePicker',
-};
-
-export const genderDefs = {
-  headerName: 'Gender',
-  field: 'gender',
-  cellEditor: 'dropDown',
-  cellEditorParams: {
-    option: ['male', 'female'],
-  },
-};
-
-export const deleteBtnDefs = {
-  headerName: '',
-  field: 'deleteBtn',
-  cellRenderer: 'deleteBtn',
-  cellRendererParams: {
-    name: 'delete',
-  },
-  editable: false,
-};
+];

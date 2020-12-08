@@ -1,58 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { AgGridReact } from 'ag-grid-react';
-import axios from 'axios';
+import store from 'store';
 // component
 import dropDown from '../components/Dropdown';
 import datePicker from '../components/DatePicker';
 import deleteBtn from '../components/Button';
+import AddRowBtn from '../components/AddRow';
 // data
 import {
   rowData,
   columnDefs,
-  countryDefs,
-  dateOfBirthDefs,
   defaultColDef,
-  deleteBtnDefs,
-  genderDefs,
+  nameColumnDefs,
 } from '../utility/data';
-// helper
-import {
-  onAddRow,
-  onAddRowAtIndex3,
-  onRemoveSelected,
-} from '../utility/helper';
 
 const Home = () => {
   // Grid api
   const [gridApi, setGridApi] = useState(null);
+  const [localRowData, setLocalRowData] = useState([]);
+  const [localColumnDefs, setLocalColumnDefs] = useState([]);
+
+  useEffect(() => {
+    if (!store.get('rowData')) {
+      store.set('rowData', rowData);
+      store.set('columnDefs', columnDefs);
+      setLocalRowData(store.get('rowData'));
+      setLocalColumnDefs(store.get('columnDefs'));
+    } else {
+      setLocalRowData(store.get('rowData'));
+      setLocalColumnDefs(store.get('columnDefs'));
+    }
+  }, []);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
   };
-
+  const onRemoveSelected = () => {
+    gridApi.applyTransaction({ remove: gridApi.getSelectedRows() });
+  };
   return (
     <Layout title='Ag Grid'>
       <div>
-        <button onClick={() => onAddRow(gridApi)}>Add Row</button>
-        <button onClick={() => onAddRowAtIndex3(gridApi)}>
-          Add Row at Index 3
-        </button>
-        <button onClick={() => onRemoveSelected(gridApi)}>
-          Remove selected
-        </button>
+        <AddRowBtn title={'Add Row'} atIndex={0} api={gridApi} />
+        <AddRowBtn title={'Add Row at Index 3'} atIndex={3} api={gridApi} />
+        <button onClick={onRemoveSelected}>Remove selected</button>
 
         <div className='ag-theme-alpine' style={{ height: 400, width: 1600 }}>
           <AgGridReact
             onGridReady={onGridReady}
-            rowData={rowData}
-            columnDefs={[
-              ...columnDefs,
-              dateOfBirthDefs,
-              countryDefs,
-              genderDefs,
-              deleteBtnDefs,
-            ]}
+            rowData={localRowData}
+            columnDefs={[...localColumnDefs, nameColumnDefs]}
             defaultColDef={defaultColDef}
             frameworkComponents={{
               dropDown: dropDown,

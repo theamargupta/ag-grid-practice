@@ -3,18 +3,12 @@ import Head from 'next/head';
 
 const Layout = ({ title, children }) => {
   return (
-    <div
-    // className='bg-gray-300'
-    >
+    <div>
       <Head>
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main
-      //className='container mx-auto max-w-ls pt-8 min-h-screen'
-      >
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 };
