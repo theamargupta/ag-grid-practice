@@ -10,6 +10,8 @@ import AddRowBtn from '../components/AddRow';
 import asyncValidationEditor from '../components/AsyncEditor';
 // data
 import { rowData, columnDefs, defaultColDef } from '../utility/data';
+// Styled Components
+import { Container } from '../components/StyledComponents';
 
 const Home = () => {
   // Grid api
@@ -33,12 +35,16 @@ const Home = () => {
   };
   return (
     <Layout title='Ag Grid'>
-      <div>
-        <AddRowBtn title={'Add Row'} atIndex={0} api={gridApi} />
-        <AddRowBtn title={'Add Row at Index 3'} atIndex={3} api={gridApi} />
-        <button onClick={onRemoveSelected}>Remove selected</button>
-
-        <div className='ag-theme-alpine' style={{ height: 400, width: 1600 }}>
+      <Container>
+        <div>
+          <AddRowBtn title={'Add Row'} atIndex={0} api={gridApi} />
+          <AddRowBtn title={'Add Row at Index 3'} atIndex={3} api={gridApi} />
+          <button onClick={onRemoveSelected}>Remove selected</button>
+        </div>
+        <div
+          className='ag-theme-alpine'
+          style={{ height: '40vh', width: '90vw' }}
+        >
           <AgGridReact
             onGridReady={onGridReady}
             rowData={localRowData}
@@ -54,7 +60,7 @@ const Home = () => {
             rowSelection='multiple'
           />
         </div>
-      </div>
+      </Container>
     </Layout>
   );
 };
