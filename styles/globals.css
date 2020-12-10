@@ -20,3 +20,12 @@ a {
 .validClass {
   color: #000501;
 }
+.rag-red-outer {
+  color: #ff0000;
+}
+.rag-green-outer {
+  color: green;
+}
+.rag-amber-outer {
+  color: blue;
+}

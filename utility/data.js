@@ -35,20 +35,26 @@ export const rowData = [
   },
 ];
 export const columnDefs = [
-  { headerName: 'Name', field: 'name', checkboxSelection: true },
   {
-    headerName: 'Email',
-    field: 'email',
-    cellClass: (props) =>
-      validator.isEmail(props.value) ? 'validClass' : 'invalidClass',
-    // cellStyle: (props) => {
-    //   if (!validator.isEmail(props.value)) {
-    //     return { color: 'white', backgroundColor: 'red' };
-    //   } else {
-    //     return null;
-    //   }
-    // },
+    headerName: 'Name',
+    field: 'name',
+    checkboxSelection: true,
+    cellClassRules: {
+      // apply green to 2008
+      'rag-green-outer': function (params) {
+        return params.value.length === 4;
+      },
+      // apply amber 2004
+      'rag-amber-outer': function (params) {
+        return params.value.length === 5;
+      },
+      // apply red to 2000
+      'rag-red-outer': function (params) {
+        return params.value.length === 6;
+      },
+    },
   },
+  { headerName: 'Email', field: 'email' },
   {
     headerName: 'City',
     field: 'city',

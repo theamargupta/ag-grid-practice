@@ -11,7 +11,7 @@ import asyncValidationEditor from '../components/AsyncEditor';
 // data
 import { rowData, columnDefs, defaultColDef } from '../utility/data';
 // Styled Components
-import { Container } from '../components/StyledComponents';
+import { Container, FirstContainerBox } from '../components/StyledComponents';
 
 const Home = () => {
   // Grid api
@@ -36,11 +36,27 @@ const Home = () => {
   return (
     <Layout title='Ag Grid'>
       <Container>
-        <div>
-          <AddRowBtn title={'Add Row'} atIndex={0} api={gridApi} />
-          <AddRowBtn title={'Add Row at Index 3'} atIndex={3} api={gridApi} />
-          <button onClick={onRemoveSelected}>Remove selected</button>
-        </div>
+        <FirstContainerBox>
+          <div>
+            <h6>Soft Validation</h6>
+            <p>
+              Name length at{' '}
+              <code>
+                3 === "black", 4 === "green", 5 === "blue", 6 ==="red"
+              </code>
+            </p>
+            <h6>Hard Validation</h6>
+            <p>
+              City name must include{' '}
+              <code>['Delhi', 'Chennai', 'Mumbai', 'Kolkata']</code>
+            </p>
+          </div>
+          <div>
+            <AddRowBtn title={'Add Row'} atIndex={0} api={gridApi} />
+            <AddRowBtn title={'Add Row at Index 3'} atIndex={3} api={gridApi} />
+            <button onClick={onRemoveSelected}>Remove selected</button>
+          </div>
+        </FirstContainerBox>
         <div
           className='ag-theme-alpine'
           style={{ height: '40vh', width: '90vw' }}
