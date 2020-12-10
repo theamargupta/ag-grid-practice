@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+.invalidClass {
+  color: #e91e63;
+}
+.validClass {
+  color: #000501;
+}

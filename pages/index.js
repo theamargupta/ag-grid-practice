@@ -7,29 +7,21 @@ import dropDown from '../components/Dropdown';
 import datePicker from '../components/DatePicker';
 import deleteBtn from '../components/Button';
 import AddRowBtn from '../components/AddRow';
+import asyncValidationEditor from '../components/AsyncEditor';
 // data
-import {
-  rowData,
-  columnDefs,
-  defaultColDef,
-  nameColumnDefs,
-} from '../utility/data';
+import { rowData, columnDefs, defaultColDef } from '../utility/data';
 
 const Home = () => {
   // Grid api
   const [gridApi, setGridApi] = useState(null);
   const [localRowData, setLocalRowData] = useState([]);
-  const [localColumnDefs, setLocalColumnDefs] = useState([]);
 
   useEffect(() => {
     if (!store.get('rowData')) {
       store.set('rowData', rowData);
-      store.set('columnDefs', columnDefs);
       setLocalRowData(store.get('rowData'));
-      setLocalColumnDefs(store.get('columnDefs'));
     } else {
       setLocalRowData(store.get('rowData'));
-      setLocalColumnDefs(store.get('columnDefs'));
     }
   }, []);
 
@@ -50,12 +42,13 @@ const Home = () => {
           <AgGridReact
             onGridReady={onGridReady}
             rowData={localRowData}
-            columnDefs={[...localColumnDefs, nameColumnDefs]}
+            columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             frameworkComponents={{
               dropDown: dropDown,
               datePicker: datePicker,
               deleteBtn: deleteBtn,
+              asyncValidationEditor: asyncValidationEditor,
             }}
             rowMultiSelectWithClick={true}
             rowSelection='multiple'

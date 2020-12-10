@@ -1,4 +1,5 @@
 import validator from 'validator';
+
 export const rowData = [
   {
     name: 'Amar',
@@ -27,27 +28,35 @@ export const rowData = [
   {
     name: 'Amrit',
     email: 'Amar@test.com',
-    city: 'Chenai',
+    city: 'Chennai',
     country: 'india',
     gender: 'male',
     dateOfBirth: '2020-12-11',
   },
 ];
-export const nameColumnDefs = {
-  headerName: 'Email',
-  field: 'email',
-  checkboxSelection: true,
-  cellStyle: function (params) {
-    if (!validator.isEmail(params.value)) {
-      return { color: 'white', backgroundColor: 'red' };
-    } else {
-      return null;
-    }
-  },
-};
 export const columnDefs = [
-  { headerName: 'Name', field: 'name' },
-  { headerName: 'City', field: 'city' },
+  { headerName: 'Name', field: 'name', checkboxSelection: true },
+  {
+    headerName: 'Email',
+    field: 'email',
+    cellClass: (props) =>
+      validator.isEmail(props.value) ? 'validClass' : 'invalidClass',
+    // cellStyle: (props) => {
+    //   if (!validator.isEmail(props.value)) {
+    //     return { color: 'white', backgroundColor: 'red' };
+    //   } else {
+    //     return null;
+    //   }
+    // },
+  },
+  {
+    headerName: 'City',
+    field: 'city',
+    cellEditor: 'asyncValidationEditor',
+    cellEditorParams: {
+      condition: (value) => cityCountries.includes(value),
+    },
+  },
   {
     headerName: 'Country',
     field: 'country',
@@ -96,3 +105,4 @@ export const emptyRowData = [
     dateOfBirth: '',
   },
 ];
+export const cityCountries = ['Delhi', 'Chennai', 'Mumbai', 'Kolkata'];
